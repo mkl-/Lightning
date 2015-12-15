@@ -60,8 +60,8 @@ def requires_auth(view):
         auth = request.authorization
         if not auth or not check_auth(auth.username, auth.password):
             return authenticate()
-        if request.remote_addr != "127.0.0.1":
-            return Response("Access outside 127.0.0.1 forbidden", 403)
+        # if request.remote_addr != "127.0.0.1":
+        #     return Response("Access outside 127.0.0.1 forbidden", 403)
         return view(*args, **kwargs)
     return decorated
 

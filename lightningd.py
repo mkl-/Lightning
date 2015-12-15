@@ -39,7 +39,7 @@ def before_request():
     g.bit = g.config['bitcoind']
     secret = hashlib.sha256(g.config['secret']).digest()
     g.seckey = CBitcoinSecret.from_secret_bytes(secret)
-    g.addr = 'http://localhost:%d/' % int(g.config['port'])
+    g.addr = 'http://0.0.0.0:%d/' % int(g.config['port'])
     g.logger = current_app.logger
 
 @app.route('/error')
@@ -108,5 +108,5 @@ if __name__ == '__main__':
     app.register_blueprint(lightning.API)
     app.register_blueprint(local.API)
 
-    app.run(port=port, debug=conf.getboolean('debug'), use_reloader=False,
+    app.run(host="0.0.0.0", port=port, debug=conf.getboolean('debug'), use_reloader=False,
             processes=3)
